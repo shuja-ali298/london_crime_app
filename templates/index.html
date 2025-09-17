@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <h2>Welcome to the London Crime Data Dashboard</h2>
+        <h3>By Shuja Ali</h3>
+        <p>Navigate to the pages below to view crime data analytics in London.</p>
+
+        <!-- Navigation Links -->
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Crime Data by Type</h5>
+                            <p class="card-text">Explore detailed crime data categorized by type.</p>
+                            <a href="{{ url_for('crime_type') }}" class="btn btn-primary">View Crime Types</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total Crimes Overview</h5>
+                            <p class="card-text">Get a summary of total crimes by borough and year.</p>
+                            <a href="{{ url_for('total_crimes') }}" class="btn btn-primary">View Total Crimes</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Dataset Overview</h5>
+                            <p class="card-text">Access the detailed dataset with options to filter and paginate.</p>
+                            <a href="{{ url_for('dataset_overview') }}" class="btn btn-primary">View Dataset</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

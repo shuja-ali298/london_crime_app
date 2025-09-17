@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Crime Type Analysis{% endblock %}
+
+{% block main %}
+    <h2 class="text-center mb-4">Crime Type Analysis</h2>
+    <div class="text-center">
+        <canvas id="crimeTypeChart"></canvas>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/crime_data_by_type')
+                .then(response => response.json())
+                .then(data => {
+                    const labels = [];
+                    const datasets = [];
+
+                    // Prepare data for Chart.js
+                    data.forEach(row => {
+                        const crimeType = row.MajorText;
+                        if (!datasets.find(d => d.label === crimeType)) {
+                            datasets.push({
+                                label: crimeType,
+                                data: [
+                                    row.Jul_2022, row.Aug_2022, row.Sep_2022, row.Oct_2022,
+                                    row.Nov_2022, row.Dec_2022, row.Jan_2023, row.Feb_2023,
+                                    row.Mar_2023, row.Apr_2023, row.May_2023, row.Jun_2023,
+                                    row.Jul_2023, row.Aug_2023, row.Sep_2023, row.Oct_2023,
+                                    row.Nov_2023, row.Dec_2023, row.Jan_2024, row.Feb_2024,
+                                    row.Mar_2024, row.Apr_2024, row.May_2024, row.Jun_2024
+                                ],
+                                borderColor: '#' + Math.floor(Math.random() * 16777215).toString(16),
+                                fill: false
+                            });
+                        }
+                    });
+
+                    const ctx = document.getElementById('crimeTypeChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Jul 2022', 'Aug 2022', 'Sep 2022', 'Oct 2022', 'Nov 2022', 'Dec 2022',
+                                     'Jan 2023', 'Feb 2023', 'Mar 2023', 'Apr 2023', 'May 2023', 'Jun 2023',
+                                     'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023',
+                                     'Jan 2024', 'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024'],
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Month'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Crimes'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        });
+    </script>
+{% endblock %}

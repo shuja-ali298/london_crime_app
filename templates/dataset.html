@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Overview{% endblock %}
+
+{% block main %}
+<h1>Dataset Overview</h1>
+
+<form method="get" action="{{ url_for('dataset_overview') }}">
+    <div class="form-group">
+        <label for="months">Select Months: (highlight to select months)</label>
+        <select name="months" id="months" class="form-control" multiple>
+            {% for month in months %}
+                <option value="{{ month }}" {% if month in selected_months %}selected{% endif %}>{{ month.replace('_', ' ') }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="borough">Select Borough:</label>
+        <select name="borough" id="borough" class="form-control">
+            <option value="">All Boroughs</option>
+            {% for borough in boroughs %}
+                <option value="{{ borough }}" {% if borough == request.args.get('borough') %}selected{% endif %}>{{ borough }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="crime_type">Select Crime Type:</label>
+        <select name="crime_type" id="crime_type" class="form-control">
+            <option value="">All Crime Types</option>
+            {% for crime_type in crime_types %}
+                <option value="{{ crime_type }}" {% if crime_type == request.args.get('crime_type') %}selected{% endif %}>{{ crime_type }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>MajorText</th>
+            <th>MinorText</th>
+            <th>BoroughName</th>
+            {% for month in selected_months %}
+                <th>{{ month.replace('_', ' ') }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+            <tr>
+                {% for item in row %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        {% if page > 1 %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('dataset_overview', page=page-1, per_page=per_page, borough=request.args.get('borough'), crime_type=request.args.get('crime_type'), months=selected_months) }}">Previous</a></li>
+        {% endif %}
+        {% for p in page_range %}
+            {% if p == '...' %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% else %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('dataset_overview', page=p, per_page=per_page, borough=request.args.get('borough'), crime_type=request.args.get('crime_type'), months=selected_months) }}">{{ p }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if page < total_pages %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('dataset_overview', page=page+1, per_page=per_page, borough=request.args.get('borough'), crime_type=request.args.get('crime_type'), months=selected_months) }}">Next</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}
