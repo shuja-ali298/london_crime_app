@@ -1,0 +1,32 @@
+-- SQL query to create table 'crime_data' in SQLite
+CREATE TABLE IF NOT EXISTS crime_data (
+    id INTEGER PRIMARY KEY,
+    MajorText TEXT,
+    MinorText TEXT,
+    BoroughName TEXT,
+    Jul_2022 INTEGER,
+    Aug_2022 INTEGER,
+    Sep_2022 INTEGER,
+    Oct_2022 INTEGER,
+    Nov_2022 INTEGER,
+    Dec_2022 INTEGER,
+    Jan_2023 INTEGER,
+    Feb_2023 INTEGER,
+    Mar_2023 INTEGER,
+    Apr_2023 INTEGER,
+    May_2023 INTEGER,
+    Jun_2023 INTEGER,
+    Jul_2023 INTEGER,
+    Aug_2023 INTEGER,
+    Sep_2023 INTEGER,
+    Oct_2023 INTEGER,
+    Nov_2023 INTEGER,
+    Dec_2023 INTEGER,
+    Jan_2024 INTEGER,
+    Feb_2024 INTEGER,
+    Mar_2024 INTEGER,
+    Apr_2024 INTEGER,
+    May_2024 INTEGER,
+    Jun_2024 INTEGER
+);
+
